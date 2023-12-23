@@ -1,7 +1,8 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use std::env;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Deserialize, Debug)]
 struct NextSongResponse {
     id: u32,
     video_id: String,
@@ -11,6 +12,11 @@ struct NextSongResponse {
     start_time: DateTime<Utc>,
     msec_duration: u32,
     thumbnail: String,
+}
+
+#[derive(Serialize)]
+struct SlackBody {
+    text: String,
 }
 
 #[tokio::main]
@@ -23,5 +29,11 @@ async fn main() -> anyhow::Result<()> {
         .json::<NextSongResponse>()
         .await?;
     eprintln!("{:?}", response);
+
+    let slack_body = SlackBody {
+        text: format!("{} {}", response.title, response.thumbnail),
+    };
+    let webhook_url = env::var("WEBHOOK_URL")?;
+    client.post(webhook_url).json(&slack_body).send().await?;
     Ok(())
 }
