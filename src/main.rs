@@ -21,6 +21,8 @@ struct SlackBody {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    dotenvy::dotenv()?;
+
     let client = reqwest::Client::new();
     let response = client
         .get("https://cafe.kiite.jp/api/cafe/next_song")

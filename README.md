@@ -2,11 +2,7 @@
 
 ## 準備
 
-Slack の通知先への Webhook URL を環境変数に設定する。
-
-```shell
-$ export WEBHOOK_URL=https://hooks.slack.com/services/...
-```
+[`.env.sample`](./.env.sample) をコピーして `.env` を作り、値を埋める。
 
 通知対象とする曲は、`videos.txt` に行区切りで指定する（ゆくゆくは自動取得にしたい）。
 
