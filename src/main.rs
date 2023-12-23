@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -7,7 +8,7 @@ struct NextSongResponse {
     title: String,
     artist_id: u32,
     artist_name: String,
-    start_time: String,
+    start_time: DateTime<Utc>,
     msec_duration: u32,
     thumbnail: String,
 }
