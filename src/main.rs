@@ -15,7 +15,10 @@ struct NextSongResponse {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let response = reqwest::get("https://cafe.kiite.jp/api/cafe/next_song")
+    let client = reqwest::Client::new();
+    let response = client
+        .get("https://cafe.kiite.jp/api/cafe/next_song")
+        .send()
         .await?
         .json::<NextSongResponse>()
         .await?;
